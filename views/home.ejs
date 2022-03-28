@@ -77,21 +77,10 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-white">
           <div class="container-fluid">
-            <!-- <button
-              class="navbar-toggler"
-              type="button"
-              data-mdb-toggle="collapse"
-              data-mdb-target="#navbarExample01"
-              aria-controls="navbarExample01"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <i class="fas fa-bars"></i>
-            </button> -->
             <div class="navs" id="navbarExample01">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item active">
-                  <a class="nav-link" aria-current="page" href="#">Photopia</a>
+                  <a class="nav-link" aria-current="page" href="/">Photopia</a>
                 </li>
                 <% if(isLoggedIn){ %>
                 <li class="nav-item" id="user">
@@ -112,12 +101,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"
         <!-- Navbar -->
       
         <!-- Jumbotron -->
-        <!-- <div class="p-5 text-center bg-light">
-          <h1 class="mb-3">Heading</h1>
-          <h4 class="mb-3">Subheading</h4>
-          <a class="btn btn-primary" href="" role="button">Call to action</a>
-        </div> -->
-        <!-- Jumbotron -->
+       
         <br>
         <div class="container" id="upload">
             <div class="col-md-6">
@@ -125,7 +109,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"
                 <div class="uploadpost">
                     <div class="container">
                         <p>Upload post</p>
-                        <form action="" method="post" id="uploadform">
+                        <form action="/" method="post" id="uploadform">
                             <input type="file" id="image_input" name="picture" accept="image/png, image/jpg">
                             <!-- <div id="display_image"></div> -->
                             <input type="text" id="caption" name="caption" placeholder="Write Caption" style="width: 20rem; height: 5rem; margin-bottom: 10px; margin-top: 10px;">
@@ -150,7 +134,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"
                   <div class="card-body">
                       <div class="reactions">
                         <i class="fa-solid fa-heart fa-2x" id="like" style="color: #696969;cursor: pointer;" onclick="myFunction()"></i>
-                        <a href="comments.html"><i class="fa-solid fa-comments fa-2x"></i></a>
+                        <a href="/posts/<%=post._id%>"><i class="fa-solid fa-comments fa-2x"></i></a>
                       </div>
                       <p class="nooflikes"><%=post.likes%> likes</p>
                     <p class="card-text"><%=post.caption%></p>

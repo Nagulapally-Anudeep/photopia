@@ -24,6 +24,8 @@ const postSchema = new mongoose.Schema({
     {
       content: String, //actual comment
       commentBy: String, // comment by userId
+      commentByName: String, // username
+      commentByPic: String,
     },
   ],
 });

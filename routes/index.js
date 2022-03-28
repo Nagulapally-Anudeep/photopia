@@ -20,9 +20,5 @@ router.post(
   },
   postController.likePost
 );
-router.post("/like", (req, res, next) => {
-  console.log(req.body);
-  next();
-}, postController.likePost);
 
 module.exports = router;

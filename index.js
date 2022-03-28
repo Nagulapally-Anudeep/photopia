@@ -73,7 +73,7 @@ passport.use(
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 app.use(cookieParser("abcd")); // * abcd
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   session({
     secret: "shinzou sasageyo",
@@ -121,5 +121,70 @@ app.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/");
 });
+
+///////////////////////////////////////////////////////////////////////////////
+const cloudinary = require("cloudinary").v2;
+const multer = require("multer");
+const fs = require("fs");
+
+if (!fs.existsSync("./uploads")) {
+  fs.mkdirSync("./uploads");
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage });
+app.use("/uploads", express.static("uploads"));
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+});
+
+async function uploadToCloudinary(localFilePath) {
+  const mainFolderName = "main";
+  const filePathOnCloud = `${mainFolderName}/${localFilePath}`;
+  return cloudinary.uploader.upload(localFilePath, {public_id: filePathOnCloud}).then((result) => {
+    fs.unlinkSync(localFilePath);
+    return {
+      message: "Success",
+      url: result.url,
+    };
+  }).catch(error => {
+    fs.unlinkSync(localFilePath);
+    return {message: "Error", error};
+  });
+}
+
+function buildSuccessMsg(urlList){
+  return {
+    message: "Success",
+    urlList: urlList
+  };
+}
+
+
+
+app.get("/upload", (req, res) => {
+  res.render("fileupload");
+});
+
+app.post("/uploadphoto", upload.single("photo"),async (req, res, next) => {
+  const localFilePath = req.file.path;
+  const result = await uploadToCloudinary(localFilePath);
+  if (result.message === "Success") {
+    res.send(result);
+  } else {
+    res.json(result);
+  }
+});
+///////////////////////////////////////////////////////////////////////////////
 
 module.exports = app;

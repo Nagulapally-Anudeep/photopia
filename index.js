@@ -16,12 +16,15 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((user, done) => {
   done(null, user);
 });
+
+const callbackURL = `http://${process.env.NODE_ENV === "development" ? "localhost" : "cryptodosth.com"}/auth/google/callback`;
+console.log(callbackURL);
 passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://cryptodosth.com/auth/google/callback",
+      callbackURL,
     },
     async (accessToken, refreshToken, profile, done) => {
       return done(null, profile);

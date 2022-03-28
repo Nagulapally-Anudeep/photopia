@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<head>
+    <title>
+        Photopia
+    </title>
+    <!-- bootstrap cdn -->
+    <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    rel="stylesheet"
+  />
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    rel="stylesheet"
+  />
+  <!-- MDB -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- MDB -->
+<script
+type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"
+></script>
+   
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
+</head>
+<style>
+      .reactions
+    {
+        margin: auto;
+    }
+    .nooflikes
+    {
+        margin: auto;
+    }
+    .user
+    {
+        margin-top: 10px;
+    }
+</style>
+<body>
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+          <div class="container-fluid">
+          
+            <div class="navs" id="navbarExample01">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item active">
+                  <a class="nav-link" aria-current="page" href="#">Photopia</a>
+                </li>
+               
+                <li class="nav-item" id="login" style="position:absolute; right: 20px;;">
+                  <a class="nav-link" href="#">Login</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <br>
+        <div class="container">
+            <div class="d-flex justify-content-center">
+        <div class="card" style="width: 40rem;">
+            <img class="card-img-top" src="insta1.jpg" alt="Card image cap">
+            <div class="card-body">
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Add Comment</small>
+              <!-- <form action="" method="post" id="uploadform">
+                <img class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg" width="38">
+                <input type="text" id="caption" placeholder="Comment" style="width: 20rem; height: fit-content; margin-bottom: 10px; margin-top: 10px;">
+                <input type="submit" value="Comment" style="border-radius: 10px; margin: auto; margin-bottom: 10px;">
+            </form> --> 
+            <form action="" method="post">
+              <div class="d-flex flex-row add-comment-section mt-4 mb-4">
+                <img class="img-fluid img-responsive rounded-circle mr-2" style="margin-right: 10px;" src="https://i.imgur.com/qdiP4DB.jpg" width="38">
+                <input type="text" class="form-control mr-3" placeholder="Add comment">
+              </div> 
+                <input type="submit" value="Comment" style="border-radius: 10px; margin: auto; margin-bottom: 10px;">
+            </form>
+            <small class="text-muted">Comments</small>
+            <div class="commented-section mt-2">
+                <div class="d-flex flex-row add-comment-section mt-4 mb-4"><img class="img-fluid img-responsive rounded-circle mr-2" style="margin-right: 10px;" src="https://i.imgur.com/qdiP4DB.jpg" width="38"><h5>Samoya johns</h5></div>
+                <div class="comment-text-sm"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..</span></div>
+                <span class="mb-1 ml-2">5 hours ago</span>
+            </div>
+            <div class="commented-section mt-2">
+                <div class="d-flex flex-row add-comment-section mt-4 mb-4"><img class="img-fluid img-responsive rounded-circle mr-2" style="margin-right: 10px;" src="https://i.imgur.com/qdiP4DB.jpg" width="38"><h5>Samoya johns</h5></div>
+                <div class="comment-text-sm"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..</span></div>
+                <span class="mb-1 ml-2">5 hours ago</span>
+            </div>
+            <div class="commented-section mt-2">
+                <div class="d-flex flex-row add-comment-section mt-4 mb-4"><img class="img-fluid img-responsive rounded-circle mr-2" style="margin-right: 10px;" src="https://i.imgur.com/qdiP4DB.jpg" width="38"><h5>Samoya johns</h5></div>
+                <div class="comment-text-sm"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..</span></div>
+                <span class="mb-1 ml-2">5 hours ago</span>
+            </div>
+          </div>
+        </div>
+        </div>
+</body>

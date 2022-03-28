@@ -7,6 +7,9 @@ const userSchema = new mongoose.Schema({
   profilePic: {
     type: String,
   },
+  email: {
+    type: String
+  },
   posts: [String],
   likedPosts: [String],
 });

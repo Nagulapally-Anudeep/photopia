@@ -76,8 +76,6 @@ app.use(cookieParser("abcd")); // * abcd
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   session({
-    resave: false, // *
-    saveUninitialized: false, // *
     secret: "shinzou sasageyo",
     key: "eren yeager",
   })
@@ -85,10 +83,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 // *
-app.use((req, res, next) => {
-  res.locals.user = req.user || null;
-  next();
-});
+// app.use((req, res, next) => {
+//   res.locals.user = req.user || null;
+//   next();
+// });
 // *
 app.use(express.static(__dirname + "/public"));
 

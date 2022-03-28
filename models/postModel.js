@@ -10,7 +10,16 @@ const postSchema = new mongoose.Schema({
   createdBy: {
     type: String, // user ID
   },
-  comments: [String],
+  likes: {
+    type: Number,
+    default: 0,
+  },
+  comments: [
+    {
+      content: String, //actual comment
+      commentBy: String, // comment by userId
+    },
+  ],
 });
 
 const Post = mongoose.model("Post", postSchema);

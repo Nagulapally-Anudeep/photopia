@@ -22,6 +22,64 @@ exports.createPost = async (req, res, next) => {
   res.redirect("/");
 };
 
-exports.likePost = async (req, res, next) => {};
-exports.unlikePost = async (req, res, next) => {};
-exports.comment = async (req, res, next) => {};
+exports.comment = async (req, res, next) => {
+  //  .../posts/:postID
+  const commentedUser = req.user;
+  const newComment = {
+    content: req.body.comment,
+    commentedBy: commentedUser._id,
+  };
+
+  const post = await Post.findById(req.params.postID);
+  const postComments = post.comments;
+  postComments.push(newComment);
+
+  await Post.findByIdAndUpdate(
+    post._id,
+    { $set: { comments: postComments } },
+    { new: true }
+  );
+
+  res.redirect(`/posts/${post._id}`);
+};
+
+exports.likePost = async (req, res, next) => {
+  const post = await Post.findById(req.body.postID);
+  const user = req.user;
+
+  const userLikedPosts = user.likedPosts;
+  userLikedPosts.push(post._id);
+
+  await User.findByIdAndUpdate(
+    user._id,
+    { $set: { likedPosts: userLikedPosts } },
+    { new: true }
+  );
+
+  let likes = post.likes;
+  likes++;
+
+  await Post.findByIdAndUpdate(post._id, { $set: { likes } }, { new: true });
+  res.redirect("/");
+};
+
+exports.unlikePost = async (req, res, next) => {
+  const post = await Post.findById(req.body.postID);
+  const user = req.user;
+
+  const userLikedPosts = user.likedPosts;
+  const index = indexOf(post._id);
+  userLikedPosts.splice(index, 1);
+
+  await User.findByIdAndUpdate(
+    user._id,
+    { $set: { likedPosts: userLikedPosts } },
+    { new: true }
+  );
+
+  let likes = post.likes;
+  likes--;
+
+  await Post.findByIdAndUpdate(post._id, { $set: { likes } }, { new: true });
+  res.redirect("/");
+};

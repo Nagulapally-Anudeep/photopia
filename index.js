@@ -73,7 +73,8 @@ passport.use(
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 app.use(cookieParser("abcd")); // * abcd
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(
   session({
     secret: "shinzou sasageyo",
@@ -92,11 +93,15 @@ app.use(express.static(__dirname + "/public"));
 
 app.use("/", indexRouter);
 
-app.get("/", ensureAuthenticated, async (req, res) => {
+app.get("/", async (req, res) => {
   // res.send(req.user);
   console.log(req.user);
   const posts = await Post.find();
-  res.render("home", { posts: posts, isLoggedIn: true, user: req.user });
+  if (req.isAuthenticated()) {
+    res.render("home", { posts: posts, isLoggedIn: true, user: req.user });
+  } else {
+    res.render("homeVisitor", { posts: posts });
+  }
 });
 
 app.post("/", ensureAuthenticated, postController.createPost);
@@ -151,32 +156,33 @@ cloudinary.config({
 async function uploadToCloudinary(localFilePath) {
   const mainFolderName = "main";
   const filePathOnCloud = `${mainFolderName}/${localFilePath}`;
-  return cloudinary.uploader.upload(localFilePath, {public_id: filePathOnCloud}).then((result) => {
-    fs.unlinkSync(localFilePath);
-    return {
-      message: "Success",
-      url: result.url,
-    };
-  }).catch(error => {
-    fs.unlinkSync(localFilePath);
-    return {message: "Error", error};
-  });
+  return cloudinary.uploader
+    .upload(localFilePath, { public_id: filePathOnCloud })
+    .then((result) => {
+      fs.unlinkSync(localFilePath);
+      return {
+        message: "Success",
+        url: result.url,
+      };
+    })
+    .catch((error) => {
+      fs.unlinkSync(localFilePath);
+      return { message: "Error", error };
+    });
 }
 
-function buildSuccessMsg(urlList){
+function buildSuccessMsg(urlList) {
   return {
     message: "Success",
-    urlList: urlList
+    urlList: urlList,
   };
 }
-
-
 
 app.get("/upload", (req, res) => {
   res.render("fileupload");
 });
 
-app.post("/uploadphoto", upload.single("photo"),async (req, res, next) => {
+app.post("/uploadphoto", upload.single("photo"), async (req, res, next) => {
   const localFilePath = req.file.path;
   const result = await uploadToCloudinary(localFilePath);
   if (result.message === "Success") {

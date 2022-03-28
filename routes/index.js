@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const postController = require("../controllers/postController");
+const { ensureAuthenticated } = require("../middleware");
 
 router.get("/test", (req, res) => {
   console.log(req.user);
@@ -8,13 +9,17 @@ router.get("/test", (req, res) => {
 
 router
   .route("/posts/:postID")
-  .get(postController.getPost)
-  .post(postController.comment);
+  .get(ensureAuthenticated, postController.getPost)
+  .post(ensureAuthenticated, postController.comment);
 
-router.post("/like", (req, res, next) => {
-  console.log(req.body);
-  next();
-}, postController.likePost);
+router.post(
+  "/like",
+  (req, res, next) => {
+    console.log(req.body);
+    next();
+  },
+  postController.likePost
+);
 router.post("/unlike", postController.unlikePost);
 
 module.exports = router;

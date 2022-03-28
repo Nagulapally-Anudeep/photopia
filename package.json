@@ -1,0 +1,24 @@
+{
+  "name": "photopia",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nagulapally-Anudeep/photopia.git"
+  },
+  "author": "Anudeep, Sathya, Charan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nagulapally-Anudeep/photopia/issues"
+  },
+  "homepage": "https://github.com/Nagulapally-Anudeep/photopia#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "mongoose": "^6.2.8"
+  }
+}

@@ -17,7 +17,7 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-const callbackURL = `http://${process.env.NODE_ENV === "development" ? "localhost" : "cryptodosth.com"}/auth/google/callback`;
+const callbackURL = `http://${process.env.NODE_ENV === "development" ? "localhost:3000" : "cryptodosth.com"}/auth/google/callback`;
 console.log(callbackURL);
 passport.use(
   new GoogleStrategy(

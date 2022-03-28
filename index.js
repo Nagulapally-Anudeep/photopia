@@ -26,10 +26,36 @@ passport.use(
       callbackURL: "http://localhost:3000/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
-
-		}
+			console.log(profile);
+      done(null, profile);
+    }
   )
 );
+
+app.get("/", (req, res) => {
+	res.send(req.user);
+})
+
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/",
+    session: true,
+  }),
+  (req, res) => {
+    res.redirect("/");
+  }
+);
+
+app.get("/logout", (req, res) => {
+	req.logout();
+	res.redirect("/");
+});
 
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
@@ -37,7 +63,7 @@ app.use(express.static("public"));
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(session({ secret: "shinzou sasageyo", key: "levi"}));
+app.use(session({ secret: "shinzou sasageyo", key: "levi" }));
 
 app.use(passport.initialize());
 app.use(passport.session());

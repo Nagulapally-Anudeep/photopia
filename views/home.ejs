@@ -158,8 +158,6 @@
 
 </body>
 <script>
-  let {data: someData} = await axios.get("https://x.wazirx.com/api/v2/tickers");
-  console.log(someData);
   let posts = <%- JSON.stringify(posts) %>;
   let user = <%- JSON.stringify(user) %>;
   console.log(posts);
@@ -172,17 +170,19 @@
     }
   }
   async function like(postID) {
-    console.log(postID);
-    const {data} = await axios.post({
-      url: `http://localhost:3000/like`,
-      // headers: {
-      //   'Content-Type': 'application/json'
-      // },
-      data: {
+    let response = await fetch(`/like`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
         postID: postID
-      }
+      })
     });
-    console.log(data)
+    let data = await response.json();
+    console.log(data);
+    console.log("response", response);
     document.getElementById('noOfLikes_' + postID).innerHTML = data.post.likes;
     if(document.getElementById(postID).style.color === 'rgb(255, 0, 0)') {
       document.getElementById(postID).style.color = '#696969';

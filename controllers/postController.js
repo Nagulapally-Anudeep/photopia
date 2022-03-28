@@ -22,6 +22,15 @@ exports.createPost = async (req, res, next) => {
   res.redirect("/");
 };
 
+exports.getPost = async (req, res, next) => {
+  // .../posts/:postID
+  const post = await Post.findById(req.params.postID);
+  res.render("comments", {
+    post: post,
+    user: req.user,
+  });
+};
+
 exports.comment = async (req, res, next) => {
   //  .../posts/:postID
   const commentedUser = req.user;

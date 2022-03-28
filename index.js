@@ -1,7 +1,6 @@
-require("dotenv").config();
 const express = require("express");
 const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const session = require("cookie-session");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
@@ -10,6 +9,14 @@ const cors = require("cors");
 const app = express();
 
 app.use(cors());
+app.use(bodyParser.urlencoded({extended: true}));
+app.set("view engine", "ejs");
+app.use(cookieParser("adskaksd"));
+app.use(session({secret: "shinzou sasageyo", key: "eren yeager"}))
+app.use(express.json());
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -23,11 +30,10 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/callback",
+      callbackURL: "http://cryptodosth.com/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
-			console.log(profile);
-      done(null, profile);
+      return done(null, profile);
     }
   )
 );
@@ -57,16 +63,4 @@ app.get("/logout", (req, res) => {
 	res.redirect("/");
 });
 
-app.set("views", __dirname + "/views");
-app.set("view engine", "ejs");
-app.use(express.static("public"));
-
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(session({ secret: "shinzou sasageyo", key: "levi" }));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log("Server is running on port " + port));
+module.exports = app;

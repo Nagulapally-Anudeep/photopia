@@ -10,6 +10,12 @@ const postSchema = new mongoose.Schema({
   createdBy: {
     type: String, // user ID
   },
+  createdByName: {
+    type: String,
+  },
+  createdByPic: {
+    type: String,
+  },
   likes: {
     type: Number,
     default: 0,
@@ -18,6 +24,8 @@ const postSchema = new mongoose.Schema({
     {
       content: String, //actual comment
       commentBy: String, // comment by userId
+      commentByName: String, // username
+      commentByPic: String,
     },
   ],
 });

@@ -7,6 +7,8 @@ exports.createPost = async (req, res, next) => {
     picture: req.body.picture,
     caption: req.body.caption,
     createdBy: createdUser._id,
+    createdByName: createdUser.name,
+    createdByPic: createdUser.profilePic,
   };
   const post = await Post.create(newPost);
 
@@ -28,6 +30,7 @@ exports.getPost = async (req, res, next) => {
   res.render("comments", {
     post: post,
     user: req.user,
+    isLoggedIn: true,
   });
 };
 
@@ -36,7 +39,9 @@ exports.comment = async (req, res, next) => {
   const commentedUser = req.user;
   const newComment = {
     content: req.body.comment,
-    commentedBy: commentedUser._id,
+    commentBy: commentedUser._id,
+    commentByName: commentedUser.name,
+    commentByPic: commentedUser.profilePic,
   };
 
   const post = await Post.findById(req.params.postID);

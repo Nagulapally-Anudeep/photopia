@@ -7,6 +7,8 @@ exports.createPost = async (req, res, next) => {
     picture: req.body.picture,
     caption: req.body.caption,
     createdBy: createdUser._id,
+    createdByName: createdUser.name,
+    createdByPic: createdUser.profilePic,
   };
   const post = await Post.create(newPost);
 

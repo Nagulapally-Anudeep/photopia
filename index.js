@@ -49,12 +49,12 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       let userProfile = profile;
-      console.log(userProfile);
+      // console.log(userProfile);
       process.nextTick(async () => {
         const email = userProfile.emails[0].value;
-        console.log(email);
+        // console.log(email);
         const user = await User.findOne({ email });
-        console.log(user);
+        // console.log(user);
         if (user) {
           return done(null, user);
         }

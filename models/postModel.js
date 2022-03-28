@@ -10,6 +10,12 @@ const postSchema = new mongoose.Schema({
   createdBy: {
     type: String, // user ID
   },
+  createdByName: {
+    type: String,
+  },
+  createdByPic: {
+    type: String,
+  },
   likes: {
     type: Number,
     default: 0,

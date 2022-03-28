@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   posts: [String],
+  likedPosts: [String],
 });
 
 const User = mongoose.model("User", userSchema);

@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const postController = require("../controllers/postController");
+const userController = require("../controllers/userController");
 const { ensureAuthenticated } = require("../middleware");
 
 router.get("/test", (req, res) => {
@@ -20,5 +21,7 @@ router.post(
   },
   postController.likePost
 );
+
+router.get("/user/:userID", userController.getUser);
 
 module.exports = router;

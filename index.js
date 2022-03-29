@@ -38,7 +38,7 @@ passport.deserializeUser((_id, done) => {
 });
 
 const callbackURL = `http://${
-  process.env.NODE_ENV === "development" ? "localhost:3000" : "cryptodosth.com"
+  process.env.NODE_ENV === "development" ? "localhost:3000" : "codewithsathya.com"
 }/auth/google/callback`;
 console.log(callbackURL);
 passport.use(

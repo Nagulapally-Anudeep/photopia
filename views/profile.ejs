@@ -148,7 +148,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"
             <div class="row">
                 <div class="col-md-4" onmouseover="addButton('<%=posts[i]._id%>')" onmouseout="removeButton('<%=posts[i]._id%>')">
                 <div class="card">
-                <img class="img-fluid img-responsive card-img-top picture" src="<%=posts[i].picture%>" style="height: 230px;" alt="Card image cap">
+                <a href="/posts/<%=posts[i]._id%>"><img class="img-fluid img-responsive card-img-top picture" src="<%=posts[i].picture%>" style="height: 230px;" alt="Card image cap"></a>
                 <div class="card-body">
                   <p class="card-text"><%=posts[i].caption%></p>
                   <div class="d-flex justify-content-center">
@@ -161,8 +161,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"
             <% if(i+1 < posts.length) {%>
             <div class="col-md-4" onmouseover="addButton('<%=posts[i+1]._id%>')" onmouseout="removeButton('<%=posts[i+1]._id%>')">
                 <div class="card">
-                    <img class="img-fluid img-responsive card-img-top picture" src="<%=posts[i+1].picture%>" style="height: 230px;" alt="Card image cap">
-                    <div class="card-body">
+                  <a href="/posts/<%=posts[i+1]._id%>"><img class="img-fluid img-responsive card-img-top picture" src="<%=posts[i+1].picture%>" style="height: 230px;" alt="Card image cap"></a>
+                  <div class="card-body">
                       <p class="card-text"><%=posts[i+1].caption%></p>
                       <div class="d-flex justify-content-center">
                       <div class="button" id="<%=posts[i+1]._id%>"><a href="/delete/<%=posts[i+1]._id%>">DELETE </a>
@@ -175,8 +175,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"
                <% if(i+2 < posts.length) {%>
                 <div class="col-md-4" onmouseover="addButton('<%=posts[i+2]._id%>')" onmouseout="removeButton('<%=posts[i+2]._id%>')">
                     <div class="card">
-                        <img class="img-fluid img-responsive card-img-top picture" src="<%=posts[i+2].picture%>" style="height: 230px;" alt="Card image cap">
-                        <div class="card-body">
+                      <a href="/posts/<%=posts[i+2]._id%>"><img class="img-fluid img-responsive card-img-top picture" src="<%=posts[i+2].picture%>" style="height: 230px;" alt="Card image cap"></a>
+                      <div class="card-body">
                           <p class="card-text"><%=posts[i+2].caption%></p>
                           <div class="d-flex justify-content-center">
                           <div class="button" id="<%=posts[i+2]._id%>"><a href="/delete/<%=posts[i+2]._id%>">DELETE </a>

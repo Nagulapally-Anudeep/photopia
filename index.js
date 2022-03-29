@@ -104,8 +104,6 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.post("/", ensureAuthenticated, postController.createPost);
-
 app.get(
   "/auth/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
@@ -184,14 +182,30 @@ app.get("/upload", (req, res) => {
 
 app.post("/uploadphoto", upload.single("photo"), async (req, res, next) => {
   const localFilePath = req.file.path;
-  const caption = req.body.caption;
-  console.log(caption);
   const result = await uploadToCloudinary(localFilePath);
-  if (result.message === "Success") {
-    res.send(result);
-  } else {
-    res.json(result);
-  }
+
+  const imageUrl = result.url;
+
+  const createdUser = req.user;
+  const newPost = {
+    picture: imageUrl,
+    caption: req.body.caption,
+    createdBy: createdUser._id,
+    createdByName: createdUser.name,
+    createdByPic: createdUser.profilePic,
+  };
+  const post = await Post.create(newPost);
+
+  const userPosts = createdUser.posts;
+  userPosts.push(post._id);
+
+  await User.findByIdAndUpdate(
+    createdUser._id,
+    { $set: { posts: userPosts } },
+    { new: true }
+  );
+
+  res.redirect("/");
 });
 ///////////////////////////////////////////////////////////////////////////////
 

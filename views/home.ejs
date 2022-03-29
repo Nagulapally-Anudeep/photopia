@@ -201,24 +201,24 @@
       document.getElementById(postID).style.color = '#ff0000';
     }
   }
-  const image_input = document.querySelector("#image_input");
+  // const image_input = document.querySelector("#image_input");
 
-  image_input.addEventListener("change", function () {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => {
-      const uploaded_image = reader.result;
-      document.querySelector("#display_image").style.backgroundImage = `url(${uploaded_image})`;
-    });
-    reader.readAsDataURL(this.files[0]);
-    var block_to_insert;
-    var container_block;
+  // image_input.addEventListener("change", function () {
+  //   const reader = new FileReader();
+  //   reader.addEventListener("load", () => {
+  //     const uploaded_image = reader.result;
+  //     document.querySelector("#display_image").style.backgroundImage = `url(${uploaded_image})`;
+  //   });
+  //   reader.readAsDataURL(this.files[0]);
+  //   var block_to_insert;
+  //   var container_block;
 
-    block_to_insert = document.createElement('div');
+  //   block_to_insert = document.createElement('div');
 
-    container_block = document.getElementById('uploadform');
-    block_to_insert.id = 'display_image';
-    container_block.appendChild(block_to_insert);
-  });
+  //   container_block = document.getElementById('uploadform');
+  //   block_to_insert.id = 'display_image';
+  //   container_block.appendChild(block_to_insert);
+  // });
 </script>
 
 </html>

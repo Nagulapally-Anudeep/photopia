@@ -11,7 +11,7 @@ const { ensureAuthenticated } = require("./middleware");
 const User = require("./models/userModel");
 const Post = require("./models/postModel");
 const postController = require("./controllers/postController");
-const os = require('os');
+const os = require("os");
 
 const app = express();
 
@@ -155,13 +155,16 @@ cloudinary.config({
 async function uploadToCloudinary(localFilePath) {
   const mainFolderName = "main";
   let newPath = localFilePath;
-  if(os.platform() === "win32"){
+  if (os.platform() === "win32") {
     let str = localFilePath.split("\\");
     let fileName = str[str.length - 1];
     let folderName = str[str.length - 2];
-    newPath = `./uploads/${folderName}/${fileName}`;
+    newPath = `/${folderName}/${fileName}`;
   }
   const filePathOnCloud = `${mainFolderName}/${newPath}`;
+
+  // console.log(localFilePath, "\n", newPath, "\n", filePathOnCloud);
+
   return cloudinary.uploader
     .upload(localFilePath, { public_id: filePathOnCloud })
     .then((result) => {
@@ -191,7 +194,7 @@ app.get("/upload", (req, res) => {
 app.post("/uploadphoto", upload.single("photo"), async (req, res, next) => {
   const localFilePath = req.file.path;
   const result = await uploadToCloudinary(localFilePath);
-
+  // console.log(localFilePath);
   const imageUrl = result.url;
 
   const createdUser = req.user;

@@ -127,3 +127,20 @@ exports.likePost = async (req, res, next) => {
 //   console.log("updatedPost", updatedPost);
 //   return res.status(200).send({ post: updatedPost });
 // };
+
+exports.deletePost = async (req, res, next) => {
+  const currentUser = req.user;
+  await Post.findByIdAndDelete(req.params.postID);
+
+  const userPosts = currentUser.posts;
+  const index = userPosts.indexOf(req.params.postID);
+  userPosts.splice(index, 1);
+
+  await User.findByIdAndUpdate(
+    currentUser._id,
+    { $set: { posts: userPosts } },
+    { new: true }
+  );
+
+  res.redirect("/user");
+};

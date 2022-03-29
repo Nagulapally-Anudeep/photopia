@@ -105,12 +105,22 @@
           <div class="uploadpost">
             <div class="container">
               <p>Upload post</p>
-              <form action="/" method="post" id="uploadform">
+              <!-- <form action="/" method="post" id="uploadform">
                 <input type="file" id="image_input" name="picture" accept="image/png, image/jpg">
-                <!-- <div id="display_image"></div> -->
                 <input type="text" id="caption" name="caption" placeholder="Write Caption"
                   style="width: 20rem; height: 5rem; margin-bottom: 10px; margin-top: 10px;">
                 <input type="submit" value="Submit" style="border-radius: 10px; margin: auto; margin-bottom: 10px;">
+              </form> -->
+
+              <form method="POST" action="/uploadphoto" enctype="multipart/form-data" id="uploadform">
+                <div>
+                  <input type="file" id="image_input" accept="image/*" name="photo" required />
+                  <input type="text" id="caption" name="caption" placeholder="Write Caption"
+                    style="width: 20rem; height: 5rem; margin-bottom: 10px; margin-top: 10px;">
+                </div>
+                <div>
+                  <input type="submit" value="Submit" style="border-radius: 10px; margin: auto; margin-bottom: 10px;">
+                </div>
               </form>
             </div>
           </div>
@@ -158,14 +168,14 @@
 
 </body>
 <script>
-  let posts = <%- JSON.stringify(posts) %>;
-  let user = <%- JSON.stringify(user) %>;
+  let posts = <% - JSON.stringify(posts) %>;
+  let user = <% - JSON.stringify(user) %>;
   console.log(posts);
-  for(let i = 0; i < posts.length; i++) {
+  for (let i = 0; i < posts.length; i++) {
     let post = posts[i];
     let likes = post.likes;
     document.getElementById(`noOfLikes_${post._id}`).innerHTML = likes;
-    if(user.likedPosts.includes(post._id)) {
+    if (user.likedPosts.includes(post._id)) {
       document.getElementById(`${post._id}`).style.color = 'red';
     }
   }
@@ -184,10 +194,10 @@
     console.log(data);
     console.log("response", response);
     document.getElementById('noOfLikes_' + postID).innerHTML = data.post.likes;
-    if(document.getElementById(postID).style.color === 'rgb(255, 0, 0)') {
+    if (document.getElementById(postID).style.color === 'rgb(255, 0, 0)') {
       document.getElementById(postID).style.color = '#696969';
     }
-    else{
+    else {
       document.getElementById(postID).style.color = '#ff0000';
     }
   }

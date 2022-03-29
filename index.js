@@ -184,6 +184,8 @@ app.get("/upload", (req, res) => {
 
 app.post("/uploadphoto", upload.single("photo"), async (req, res, next) => {
   const localFilePath = req.file.path;
+  const caption = req.body.caption;
+  console.log(caption);
   const result = await uploadToCloudinary(localFilePath);
   if (result.message === "Success") {
     res.send(result);

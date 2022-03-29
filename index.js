@@ -19,7 +19,7 @@ const db = mongoose.connection;
 db.on("error", () => console.log("MongoDB connection error"));
 db.once("open", () => console.log("MongoDB connected"));
 
-// app.use(cors());
+app.use(cors());
 passport.serializeUser((user, done) => {
   done(null, user._id);
 });

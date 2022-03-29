@@ -13,6 +13,9 @@
 
   <!-- MDB -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"></script>
+  <!-- axios cdn -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>console.log(axios)</script>
 
   <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css"
@@ -132,12 +135,12 @@
               alt="Card image cap">
             <div class="card-body">
               <div class="reactions">
-                <i class="fa-solid fa-heart fa-2x" id="like" style="color: #696969;cursor: pointer;"
-                  onclick="myFunction()"></i>
+                <i class="fa-solid fa-heart fa-2x" id="<%=post._id%>" style="color: #696969;cursor: pointer;"
+                  onclick="like('<%=post._id%>')"></i>
                 <a href="/posts/<%=post._id%>"><i class="fa-solid fa-comments fa-2x"></i></a>
               </div>
               <p class="nooflikes">
-                <%=post.likes%> likes
+                <span id="noOfLikes_<%=post._id%>"></span> likes
               </p>
               <p class="card-text">
                 <%=post.caption%>
@@ -155,15 +158,37 @@
 
 </body>
 <script>
-  let k = 1;
-  function myFunction() {
-    if (k === 2) {
-      document.getElementById("like").style.color = "#696969";
-      k = 1;
+  let {data: someData} = await axios.get("https://x.wazirx.com/api/v2/tickers");
+  console.log(someData);
+  let posts = <%- JSON.stringify(posts) %>;
+  let user = <%- JSON.stringify(user) %>;
+  console.log(posts);
+  for(let i = 0; i < posts.length; i++) {
+    let post = posts[i];
+    let likes = post.likes;
+    document.getElementById(`noOfLikes_${post._id}`).innerHTML = likes;
+    if(user.likedPosts.includes(post._id)) {
+      document.getElementById(`${post._id}`).style.color = 'red';
     }
-    else {
-      document.getElementById("like").style.color = "red";
-      k++;
+  }
+  async function like(postID) {
+    console.log(postID);
+    const {data} = await axios.post({
+      url: `http://localhost:3000/like`,
+      // headers: {
+      //   'Content-Type': 'application/json'
+      // },
+      data: {
+        postID: postID
+      }
+    });
+    console.log(data)
+    document.getElementById('noOfLikes_' + postID).innerHTML = data.post.likes;
+    if(document.getElementById(postID).style.color === 'rgb(255, 0, 0)') {
+      document.getElementById(postID).style.color = '#696969';
+    }
+    else{
+      document.getElementById(postID).style.color = '#ff0000';
     }
   }
   const image_input = document.querySelector("#image_input");

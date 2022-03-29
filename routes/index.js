@@ -11,4 +11,10 @@ router
   .get(postController.getPost)
   .post(postController.comment);
 
+router.post("/like", (req, res, next) => {
+  console.log(req.body);
+  next();
+}, postController.likePost);
+router.post("/unlike", postController.unlikePost);
+
 module.exports = router;

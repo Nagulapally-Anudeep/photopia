@@ -58,7 +58,10 @@ exports.comment = async (req, res, next) => {
 };
 
 exports.likePost = async (req, res, next) => {
+  console.log("hello");
+  console.log(req.body.postID);
   const post = await Post.findById(req.body.postID);
+  console.log(post);
   const user = req.user;
 
   const userLikedPosts = user.likedPosts;
@@ -73,8 +76,9 @@ exports.likePost = async (req, res, next) => {
   let likes = post.likes;
   likes++;
 
-  await Post.findByIdAndUpdate(post._id, { $set: { likes } }, { new: true });
-  res.redirect("/");
+  let updatedPost = await Post.findByIdAndUpdate(post._id, { $set: { likes } }, { new: true });
+  console.log(updatedPost);
+  res.status(200).send({post: updatedPost});
 };
 
 exports.unlikePost = async (req, res, next) => {
@@ -94,6 +98,7 @@ exports.unlikePost = async (req, res, next) => {
   let likes = post.likes;
   likes--;
 
-  await Post.findByIdAndUpdate(post._id, { $set: { likes } }, { new: true });
-  res.redirect("/");
+  let updatedPost = await Post.findByIdAndUpdate(post._id, { $set: { likes } }, { new: true });
+  console.log(updatedPost);
+  res.status(200).send({post: updatedPost});
 };

@@ -22,6 +22,6 @@ router.post(
   postController.likePost
 );
 
-router.get("/user/:userID", userController.getUser);
+router.get("/user", userController.getUser);
 
 module.exports = router;

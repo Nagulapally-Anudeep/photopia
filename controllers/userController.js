@@ -9,5 +9,5 @@ exports.getUser = async (req, res, next) => {
 
   const userPosts = await Promise.all(userPostsPromises);
 
-  res.render("profile", { user: user, posts: userPosts });
+  res.render("profile", { user: currentUser, posts: userPosts });
 };

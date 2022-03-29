@@ -44,8 +44,12 @@
     align-items: center;
     flex-direction: column;
     gap: 10px;
-    width: fit-content;
+    width: 50vw;
     padding-top: 10px;
+  }
+
+  form {
+    width: 100%;
   }
 
   #user {
@@ -54,18 +58,11 @@
     top: 17px;
   }
 
-  #uploadform {
+  .upload-flex-div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-  }
-
-  #image_input {
-    width: 50px;
-    background-position: center;
-    background-size: cover;
-    margin-bottom: 10px;
   }
 </style>
 
@@ -98,71 +95,69 @@
         </div>
       </div>
     </nav>
-    <!-- Navbar -->
+  </header>
+  <!-- Navbar -->
 
-    <!-- Jumbotron -->
+  <!-- Jumbotron -->
 
-    <br>
-    <div class="container" id="upload">
-      <div class="col-md-6">
-        <div class="uploadpost">
-          <form method="POST" action="/uploadphoto" enctype="multipart/form-data" id="uploadform">
-            <div>
-              <input type="file" id="image_input"
-                accept="image/jpeg, image/jpg, image/png, image/avif, image/apng, image/webp" name="photo" required />
+  <br>
+  <div class="container" id="upload">
+    <form method="POST" action="/uploadphoto" enctype="multipart/form-data" id="uploadform">
+      <div class="upload-flex-div">
+        <div>
+          <input type="file" id="image_input"
+            accept="image/jpeg, image/jpg, image/png, image/avif, image/apng, image/webp" name="photo" required />
+        </div>
+        <div>
+          <input type="text" id="caption" name="caption" placeholder="Write Caption"
+            style="width: 20rem; height: 5rem; margin-bottom: 10px; margin-top: 10px;">
+        </div>
+        <div>
+          <input type="submit" value="Post" style="border-radius: 10px; margin: auto; margin-bottom: 10px;">
+        </div>
+      </div>
+    </form>
+  </div>
+  <br>
+
+  <% posts.forEach(function(post){ %>
+    <div class="container">
+      <div class="d-flex justify-content-center">
+        <div class="card" style="width: 40rem;">
+          <div class="d-flex flex-row add-comment-section mt-2 mb-2">
+            <img class="img-fluid img-responsive rounded-circle ms-3 mt-1 mb-1" style="margin-right: 10px;"
+              src="<%=post.createdByPic%>" width="38">
+            <h5 class="mt-2">
+              <%=post.createdByName%>
+            </h5>
+          </div>
+          <img class="card-img-top" src="<%=post.picture%>" alt="Card image cap">
+          <div class="card-body">
+            <div class="reactions">
+              <i class="fa-solid fa-heart fa-2x" id="<%=post._id%>" style="color: #696969;cursor: pointer;"
+                onclick="like('<%=post._id%>')"></i>
+              <a href="/posts/<%=post._id%>"><i class="fa-solid fa-comments fa-2x"></i></a>
             </div>
-            <div>
-              <input type="text" id="caption" name="caption" placeholder="Write Caption"
-                style="width: 20rem; height: 5rem; margin-bottom: 10px; margin-top: 10px;">
-            </div>
-            <div>
-              <input type="submit" value="Post" style="border-radius: 10px; margin: auto; margin-bottom: 10px;">
-            </div>
-          </form>
+            <p class="nooflikes">
+              <span id="noOfLikes_<%=post._id%>"></span> likes
+            </p>
+            <p class="card-text">
+              <%=post.caption%>
+            </p>
+          </div>
+
         </div>
       </div>
     </div>
     <br>
 
-    <% posts.forEach(function(post){ %>
-      <div class="container">
-        <div class="d-flex justify-content-center">
-          <div class="card" style="width: 40rem;">
-            <div class="d-flex flex-row add-comment-section mt-2 mb-2">
-              <img class="img-fluid img-responsive rounded-circle ms-3 mt-1 mb-1" style="margin-right: 10px;"
-                src="<%=post.createdByPic%>" width="38">
-              <h5 class="mt-2">
-                <%=post.createdByName%>
-              </h5>
-            </div>
-            <img class="card-img-top" src="<%=post.picture%>" alt="Card image cap">
-            <div class="card-body">
-              <div class="reactions">
-                <i class="fa-solid fa-heart fa-2x" id="<%=post._id%>" style="color: #696969;cursor: pointer;"
-                  onclick="like('<%=post._id%>')"></i>
-                <a href="/posts/<%=post._id%>"><i class="fa-solid fa-comments fa-2x"></i></a>
-              </div>
-              <p class="nooflikes">
-                <span id="noOfLikes_<%=post._id%>"></span> likes
-              </p>
-              <p class="card-text">
-                <%=post.caption%>
-              </p>
-            </div>
+    <% }) %>
 
-          </div>
-        </div>
-      </div>
-      <br>
-
-      <% }) %>
-
-  </header>
 
 </body>
 <script>
-  let posts = <% - JSON.stringify(posts) %>;
-  let user = <% - JSON.stringify(user) %>;
+  let posts = <%- JSON.stringify(posts) %>;
+  let user = <%- JSON.stringify(user) %>;
   console.log(posts);
   console.log("hello");
   for (let i = 0; i < posts.length; i++) {

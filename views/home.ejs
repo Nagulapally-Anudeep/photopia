@@ -44,7 +44,7 @@
     align-items: center;
     flex-direction: column;
     gap: 10px;
-    width: 50vw;
+    width: 43vw;
     padding-top: 10px;
   }
 
@@ -63,6 +63,69 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+  }
+
+  #caption {
+    height: 50px;
+    width: 100%;
+    border-radius: 25px;
+    background-color: #f1f1f1;
+    padding: 20px;
+    border: none;
+  }
+
+  input {
+    -webkit-box-sizing: border-box;
+    /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;
+    /* Firefox, other Gecko */
+    box-sizing: border-box;
+  }
+
+  input[type="text"]::placeholder {
+    padding-left: 10px;
+  }
+
+  input[type="text"]::first-letter {
+    padding: 10px;
+  }
+
+  #post-button {
+    background-color: rgb(69, 122, 251);
+    border: none;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    height: 50px;
+    border-radius: 25px;
+    width: 150px;
+  }
+
+  #post-button:hover {
+    background-color: rgba(69, 122, 251, 0.4);
+    color: #fff;
+  }
+
+  input[type=file]::file-selector-button {
+    border: none;
+    padding: 10px;
+    border-radius: .2em;
+    color: #fff;
+    background-color: rgba(69, 122, 251);
+    transition: 1s;
+    cursor: pointer;
+    height: 50px;
+    width: 150px;
+    border-radius: 25px;
+  }
+
+  input[type=file]::file-selector-button:hover {
+    background-color: #81ecec;
   }
 </style>
 
@@ -109,11 +172,10 @@
             accept="image/jpeg, image/jpg, image/png, image/avif, image/apng, image/webp" name="photo" required />
         </div>
         <div>
-          <input type="text" id="caption" name="caption" placeholder="Write Caption"
-            style="width: 20rem; height: 5rem; margin-bottom: 10px; margin-top: 10px;">
+          <input type="text" id="caption" name="caption" placeholder="Write Caption">
         </div>
         <div>
-          <input type="submit" value="Post" style="border-radius: 10px; margin: auto; margin-bottom: 10px;">
+          <input type="submit" value="Post" id="post-button">
         </div>
       </div>
     </form>

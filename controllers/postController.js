@@ -62,10 +62,10 @@ exports.likePost = async (req, res, next) => {
   const user = req.user;
   if (user.likedPosts.includes(post._id)) {
     const userLikedPosts = user.likedPosts;
-    const index = indexOf(post._id);
+    const index = userLikedPosts.indexOf(post._id);
     userLikedPosts.splice(index, 1);
 
-    await User.findByIdAndUpdate(
+    let updatedUser = await User.findByIdAndUpdate(
       user._id,
       { $set: { likedPosts: userLikedPosts } },
       { new: true }
@@ -79,13 +79,13 @@ exports.likePost = async (req, res, next) => {
       { $set: { likes } },
       { new: true }
     );
-    return res.status(200).send({ post: updatedPost });
+    return res.status(200).send({ post: updatedPost, user: updatedUser });
   }
 
   const userLikedPosts = user.likedPosts;
   userLikedPosts.push(post._id);
 
-  await User.findByIdAndUpdate(
+  let updatedUser = await User.findByIdAndUpdate(
     user._id,
     { $set: { likedPosts: userLikedPosts } },
     { new: true }
@@ -99,7 +99,7 @@ exports.likePost = async (req, res, next) => {
     { $set: { likes } },
     { new: true }
   );
-  return res.status(200).send({ post: updatedPost });
+  return res.status(200).send({ post: updatedPost, user: updatedUser });
 };
 
 // exports.unlikePost = async (req, res, next) => {

@@ -45,6 +45,21 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"
       right: 100px;
       top: 17px;
    }
+
+   #comment-button{
+    background-color: rgb(69, 122, 251);
+    border: none;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    height: 40px;
+    border-radius: 20px;
+    width: 150px;
+   }
 </style>
 <body>
     <header>
@@ -95,12 +110,12 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"
             </form> --> 
             <form action="/posts/<%=post._id%>" method="post">
               <div class="d-flex flex-row add-comment-section mt-4 mb-4">
-                <img class="img-fluid img-responsive rounded-circle mr-2" style="margin-right: 10px;" src="<%=user.profilePic%>" width="38">
-                <input type="text" name="comment" class="form-control mr-3" placeholder="Add comment">
+                <img class="img-fluid img-responsive rounded-circle me-2" style="width: 40px;" src="<%=user.profilePic%>">
+                <input type="text" name="comment" class="form-control me-3" placeholder="Add comment">
               </div> 
-                <input type="submit" value="Comment" style="border-radius: 10px; margin: auto; margin-bottom: 10px;">
+              <input type="submit" value="Comment" id="comment-button">
             </form>
-            <small class="text-muted">Comments</small>
+            <p><strong>Comments</strong></p>
 
             <% post.comments.forEach(function(comment){ %>
             <div class="commented-section mt-2">

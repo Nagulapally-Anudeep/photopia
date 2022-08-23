@@ -21,11 +21,11 @@ db.on("error", () => console.log("MongoDB connection error"));
 db.once("open", () => console.log("MongoDB connected"));
 
 app.use(cors());
+
 passport.serializeUser((user, done) => {
   done(null, user._id);
 });
 passport.deserializeUser((_id, done) => {
-  // done(null, user);
   User.findById(_id, (err, user) => {
     if (err) {
       done(null, false, {
@@ -37,10 +37,8 @@ passport.deserializeUser((_id, done) => {
   });
 });
 
-const callbackURL = `http://${
-  process.env.NODE_ENV === "development" ? "localhost:3000" : "codewithsathya.com"
-}/auth/google/callback`;
-console.log(callbackURL);
+const callbackURL = `http://${process.env.NODE_ENV === "development" ? "localhost:3000" : process.env.MAIN_URL}/auth/google/callback`;
+
 passport.use(
   new GoogleStrategy(
     {
@@ -50,12 +48,9 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       let userProfile = profile;
-      // console.log(userProfile);
       process.nextTick(async () => {
         const email = userProfile.emails[0].value;
-        // console.log(email);
         const user = await User.findOne({ email });
-        // console.log(user);
         if (user) {
           return done(null, user);
         }
@@ -73,7 +68,7 @@ passport.use(
 
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
-app.use(cookieParser("abcd")); // * abcd
+app.use(cookieParser("abcd"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(
@@ -84,19 +79,12 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-// *
-// app.use((req, res, next) => {
-//   res.locals.user = req.user || null;
-//   next();
-// });
-// *
 app.use(express.static(__dirname + "/public"));
 
 app.use("/", indexRouter);
 
 app.get("/", async (req, res) => {
-  // res.send(req.user);
-  console.log(req.user);
+  console.log("user", req.user);
   const posts = await Post.find();
   if (req.isAuthenticated()) {
     res.render("home", { posts: posts, isLoggedIn: true, user: req.user });
@@ -126,7 +114,6 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-///////////////////////////////////////////////////////////////////////////////
 const cloudinary = require("cloudinary").v2;
 const multer = require("multer");
 const fs = require("fs");
@@ -163,8 +150,6 @@ async function uploadToCloudinary(localFilePath) {
   }
   const filePathOnCloud = `${mainFolderName}/${newPath}`;
 
-  // console.log(localFilePath, "\n", newPath, "\n", filePathOnCloud);
-
   return cloudinary.uploader
     .upload(localFilePath, { public_id: filePathOnCloud })
     .then((result) => {
@@ -194,7 +179,6 @@ app.get("/upload", (req, res) => {
 app.post("/uploadphoto", upload.single("photo"), async (req, res, next) => {
   const localFilePath = req.file.path;
   const result = await uploadToCloudinary(localFilePath);
-  // console.log(localFilePath);
   const imageUrl = result.url;
 
   const createdUser = req.user;
@@ -218,6 +202,5 @@ app.post("/uploadphoto", upload.single("photo"), async (req, res, next) => {
 
   res.redirect("/");
 });
-///////////////////////////////////////////////////////////////////////////////
 
 module.exports = app;

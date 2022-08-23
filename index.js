@@ -86,6 +86,7 @@ app.use("/", indexRouter);
 app.get("/", async (req, res) => {
   console.log("user", req.user);
   const posts = await Post.find();
+  posts.reverse();
   if (req.isAuthenticated()) {
     res.render("home", { posts: posts, isLoggedIn: true, user: req.user });
   } else {

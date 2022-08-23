@@ -14,4 +14,4 @@ const httpsOptions = {
 }
 
 http.createServer(app).listen(httpPort, () => console.log(`HTTP Server running on port ${httpPort}`));
-https.createServer(httpsOptions, app).listen(httpsPort, () => . console.log(`HTTPS server running on port ${httpsPort}`));
+https.createServer(httpsOptions, app).listen(httpsPort, () => console.log(`HTTPS server running on port ${httpsPort}`));

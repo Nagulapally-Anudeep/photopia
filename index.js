@@ -37,7 +37,7 @@ passport.deserializeUser((_id, done) => {
   });
 });
 
-const callbackURL = `http://${process.env.NODE_ENV === "development" ? "localhost:3000" : process.env.MAIN_URL}/auth/google/callback`;
+const callbackURL = `https://${process.env.NODE_ENV === "development" ? "localhost:3000" : process.env.MAIN_URL}/auth/google/callback`;
 
 passport.use(
   new GoogleStrategy(
